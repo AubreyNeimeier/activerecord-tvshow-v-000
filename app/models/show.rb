@@ -4,8 +4,7 @@ class Show < ActiveRecord::Base
   end
 
   def self.most_popular_show
-    show = Show.maximum("rating")
-    show.name
+    where("rating = ?", highest_rating)[0]
   end
 
   def self.lowest_rating
@@ -13,8 +12,7 @@ class Show < ActiveRecord::Base
   end
 
   def self.least_popular_show
-    m = Show.minimum(:rating)
-    m.name
+    where("rating = ?", lowest_rating)[0]
   end
 
   def self.ratings_sum
@@ -22,18 +20,15 @@ class Show < ActiveRecord::Base
   end
 
   def self.popular_shows
-    Show.all.each do |m|
-      shows << m.where("rating > 5")
+    shows = []
+    Show.all do |m|
+      shows << where("rating > 5")
     end
   end
 
 
-  def self.least_popular_show
-    Show.minimum(:rating).name
-  end
-
   def self.ratings_sum
-    Show.sum("ratings")
+    Show.sum("rating")
   end
 
 
