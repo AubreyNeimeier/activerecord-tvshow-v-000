@@ -29,7 +29,7 @@ class Show < ActiveRecord::Base
   end
 
   def self.shows_by_alphabetical_order
-    Show.where(:order => "name ASC")
+    Show.order("name ASC")
   end
 
 end
